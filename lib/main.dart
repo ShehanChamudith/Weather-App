@@ -22,11 +22,6 @@ class MyApp extends StatelessWidget {
             ),
           ),
         ),
-
-        appBar: AppBar(
-          title: Text('Weather App'),
-        ),
-
       ),
     );
   }
