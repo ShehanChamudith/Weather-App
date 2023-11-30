@@ -47,18 +47,12 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.transparent, // Set background color to transparent
-      // appBar: AppBar(
-      //   title: Text('Search for city', style: TextStyle(fontFamily: 'Ubuntu', fontSize: 18.0, fontWeight: FontWeight.w600)),
-      //   backgroundColor: Colors.transparent, // Set app bar background color to transparent
-      //   elevation: 0,
-      //   centerTitle: true,
-      // ),
+
       body: Stack(
         children: [
           // Background image
           Image.asset(
-            'images/bg.jpg',  // Replace 'background.jpg' with the actual image asset path
+            'images/bg.jpg',
             fit: BoxFit.cover,
             width: double.infinity,
             height: double.infinity,
@@ -69,26 +63,34 @@ class _MainScreenState extends State<MainScreen> {
               children: [
                 Container(
                   decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(25.0),
+                    color: Colors.white.withOpacity(0.2), // Set the opacity value (0.0 to 1.0)
+                    borderRadius: BorderRadius.circular(20.0),
                   ),
-                  child: TextField(
-                    controller: _searchController,
-                    onChanged: _onSearchTextChanged,
-                    style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.normal),
-                    decoration: InputDecoration(
-                      hintText: 'Search for City',
-                      border: InputBorder.none,
-                      contentPadding: EdgeInsets.all(15.0),
-                      prefixIcon: Image.asset(
-                        'images/search.png',
-                        width: 30.0,
-                        height: 30.0,
-                        color: Colors.grey,
+                  child: Opacity(
+                    opacity:1.0, // Set the opacity value (0.0 to 1.0)
+                    child: TextField(
+                      controller: _searchController,
+                      onChanged: _onSearchTextChanged,
+                      style: TextStyle(
+                        fontSize: 16.0,
+                        fontWeight: FontWeight.normal,
+                        fontFamily: 'Poppins',
+                      ),
+                      decoration: InputDecoration(
+                        hintText: 'Search for City',
+                        border: InputBorder.none,
+                        contentPadding: EdgeInsets.all(15.0),
+                        prefixIcon: Image.asset(
+                          'images/search.png',
+                          width: 30.0,
+                          height: 30.0,
+                          color: Colors.grey,
+                        ),
                       ),
                     ),
                   ),
                 ),
+
                 SizedBox(height: 20.0),
                 _buildSuggestedCities(),
               ],
