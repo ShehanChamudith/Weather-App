@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mad_weather_app/services/weather_service.dart';
-import 'dart:async';
-import 'dart:convert';
-import 'package:mad_weather_app/services/weather_service.dart';
+import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'model/weather.dart';
@@ -20,6 +18,8 @@ class _MainScreenState extends State<MainScreen> {
   final TextEditingController _searchController = TextEditingController();
   List<String> _suggestedCities = [];
   String _selectedCity = '';
+  String formattedDate = DateFormat.yMMMMd().format(DateTime.now());
+
 
 
   String currentWeather = "";
@@ -112,63 +112,205 @@ class _MainScreenState extends State<MainScreen> {
                         ),
                       ),
                     ),
-                    SizedBox(height: 20.0),
+                    SizedBox(height: 25.0),
                     Stack(
                       children: [
                         Center(
                           child: Container(
-                            child: Column(
-                              children: [
-                                _selectedCity.isNotEmpty
-                                    ? Text(
-                                  '$_selectedCity',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 20.0,
-                                    fontWeight: FontWeight.bold,
-                                    fontFamily: 'Poppins',
+                            width: double.infinity,
+                            decoration: BoxDecoration(
+                              color: Colors.white.withOpacity(0),
+                              borderRadius: BorderRadius.circular(20.0), // Adjust the border radius as needed
+                            ),
+
+                            child: Container(
+                              child: Column(
+                                children: [
+
+                                  SizedBox(height: 20.0),
+                                  _selectedCity.isNotEmpty
+                                      ? Text(
+                                    '$_selectedCity',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 20.0,
+                                      fontWeight: FontWeight.bold,
+                                      fontFamily: 'Poppins',
+                                    ),
+                                  )
+                                      : Container(),
+                                  SizedBox(height: 20.0),
+                                  _selectedCity.isNotEmpty
+                                      ? Image.asset(
+                                    _getImagePath(weather.condition),
+                                    width: 150.0,
+                                    height: 150.0,
+                                  )
+                                      : Container(),
+                                  _selectedCity.isNotEmpty
+                                      ? Text(
+                                    weather.condition,
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 30.0,
+                                      fontWeight: FontWeight.bold,
+                                      fontFamily: 'Poppins',
+                                    ),
+                                  )
+                                      : Container(),
+                                  Padding(
+                                    padding: const EdgeInsets.all(10.0),
+                                    child: Text(
+                                      '$formattedDate',
+                                      style: TextStyle(
+                                        color: Colors.white, // Choose a color that suits your design
+                                        fontSize: 16.0,
+                                        fontWeight: FontWeight.normal,
+                                        fontFamily: 'Poppins',
+                                      ),
+                                    ),
                                   ),
-                                )
-                                    : Container(),
-                                SizedBox(height: 40.0),
-                                _selectedCity.isNotEmpty
-                                    ? Image.asset(
-                                  _getImagePath(weather.condition),
-                                  width: 150.0,
-                                  height: 150.0,
-                                )
-                                    : Container(),
-                                SizedBox(height: 20.0),
-                                _selectedCity.isNotEmpty
-                                    ? Text(
-                                  weather.condition,
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 30.0,
-                                    fontWeight: FontWeight.bold,
-                                    fontFamily: 'Poppins',
+                                  Text(
+                                    '${weather.temperatureC.toStringAsFixed(0)}°C',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 130.0,
+                                      fontWeight: FontWeight.w300,
+                                      fontFamily: 'PoppinsT',
+                                    ),
                                   ),
-                                )
-                                    : Container(),
-                                Text(
-                                  '${weather.temperatureC.toStringAsFixed(0)}°C',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 130.0,
-                                    fontWeight: FontWeight.w300,
-                                    fontFamily: 'PoppinsT',
-                                  ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                           ),
                         ),
                         _buildSuggestedCities(),
+
                       ],
+                    ),
+                    Container(
+                      width: double.infinity,
+                      height: 180,
+                      decoration: ShapeDecoration(
+                        color: Color(0x892F8BA8),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                      ),
+                      child: Stack(
+                        children: [
+                          Positioned(
+                            left: 16,
+                            top: 27,
+                            child: Column(
+                              children: [
+                                Container(
+                                  width: 33,
+                                  height: 33,
+                                  decoration: ShapeDecoration(
+                                    color: Color(0xFF2F8BA8),
+                                    shape: CircleBorder(),
+                                  ),
+                                  child: Image.asset('images/sun.png'), // Add your image path
+                                ),
+                                SizedBox(height: 5),
+                                Text(
+                                  'Sun', // Your title
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                                Text(
+                                  'Description for Sun', // Your text below title
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Positioned(
+                            left: 16,
+                            top: 90,
+                            child: Column(
+                              children: [
+                                Container(
+                                  width: 33,
+                                  height: 33,
+                                  decoration: ShapeDecoration(
+                                    color: Color(0xFF2F8BA8),
+                                    shape: CircleBorder(),
+                                  ),
+                                  child: Image.asset('images/sun.png'), // Add your image path
+                                ),
+                                SizedBox(height: 5),
+                                Text(
+                                  'Sun', // Your title
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                                Text(
+                                  'Description for Sun', // Your text below title
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Positioned(
+                            left: 167,
+                            top: 27,
+                            child: Column(
+                              children: [
+                                Container(
+                                  width: 33,
+                                  height: 33,
+                                  decoration: ShapeDecoration(
+                                    color: Color(0xFF2F8BA8),
+                                    shape: CircleBorder(),
+                                  ),
+                                  child: Image.asset('images/sun.png'), // Add your image path
+                                ),
+                                SizedBox(height: 5),
+                                Text(
+                                  'Sun', // Your title
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                                Text(
+                                  'Description for Sun', // Your text below title
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Positioned(
+                            left: 167,
+                            top: 90,
+                            child: Column(
+                              children: [
+                                Container(
+                                  width: 33,
+                                  height: 33,
+                                  decoration: ShapeDecoration(
+                                    color: Color(0xFF2F8BA8),
+                                    shape: CircleBorder(),
+                                  ),
+                                  child: Image.asset('images/sun.png'), // Add your image path
+                                ),
+                                SizedBox(height: 5),
+                                Text(
+                                  'Sun', // Your title
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                                Text(
+                                  'Description for Sun', // Your text below title
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                              ],
+                            ),
+                          ),
+                          // Add the rest of your content here
+                        ],
+                      ),
                     ),
                   ],
                 ),
               ),
+
             ],
           ),
         ),
