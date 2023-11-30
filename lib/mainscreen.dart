@@ -66,112 +66,116 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
-      body: Stack(
-        children: [
-          // Background image
-          Image.asset(
-            'images/bg.jpg',
-            fit: BoxFit.cover,
-            width: double.infinity,
-            height: double.infinity,
-          ),
-          Padding(
-            padding: EdgeInsets.only(left: 40.0, top: 60.0, right: 40.0),
-            child: Column(
-              children: [
-
-                Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.2), // Set the opacity value (0.0 to 1.0)
-                    borderRadius: BorderRadius.circular(20.0),
-                  ),
-                  child: Opacity(
-                    opacity:1.0, // Set the opacity value (0.0 to 1.0)
-                    child: TextField(
-                      controller: _searchController,
-                      onChanged: _onSearchTextChanged,
-                      style: TextStyle(
-                        fontSize: 16.0,
-                        fontWeight: FontWeight.normal,
-                        fontFamily: 'Poppins',
+      resizeToAvoidBottomInset: false, // Set this to false
+      body: SingleChildScrollView(
+        child: Container(
+          height: MediaQuery.of(context).size.height, // Set Stack height to full screen height
+          child: Stack(
+            children: [
+              // Background image
+              Image.asset(
+                'images/bg.jpg',
+                fit: BoxFit.cover,
+                width: double.infinity,
+                height: double.infinity,
+              ),
+              Padding(
+                padding: EdgeInsets.only(left: 40.0, top: 60.0, right: 40.0),
+                child: Column(
+                  children: [
+                    Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white.withOpacity(0.2),
+                        borderRadius: BorderRadius.circular(20.0),
                       ),
-                      decoration: InputDecoration(
-                        hintText: 'Search for City',
-                        border: InputBorder.none,
-                        contentPadding: EdgeInsets.all(15.0),
-                        prefixIcon: Image.asset(
-                          'images/search.png',
-                          width: 30.0,
-                          height: 30.0,
-                          color: Colors.grey,
+                      child: Opacity(
+                        opacity: 1.0,
+                        child: TextField(
+                          controller: _searchController,
+                          onChanged: _onSearchTextChanged,
+                          style: TextStyle(
+                            fontSize: 16.0,
+                            fontWeight: FontWeight.normal,
+                            fontFamily: 'Poppins',
+                          ),
+                          decoration: InputDecoration(
+                            hintText: 'Search for City',
+                            border: InputBorder.none,
+                            contentPadding: EdgeInsets.all(15.0),
+                            prefixIcon: Image.asset(
+                              'images/search.png',
+                              width: 30.0,
+                              height: 30.0,
+                              color: Colors.grey,
+                            ),
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                ),
-
-                SizedBox(height: 20.0),
-                Stack(
-                  children: [
-
-                Center(
-                  child:Container(
-                    child: Column(
-                    children: [
-                      _selectedCity.isNotEmpty
-                      ? Text(
-                    '$_selectedCity',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 20.0,
-                      fontWeight: FontWeight.bold,
-                      fontFamily: 'Poppins',
+                    SizedBox(height: 20.0),
+                    Stack(
+                      children: [
+                        Center(
+                          child: Container(
+                            child: Column(
+                              children: [
+                                _selectedCity.isNotEmpty
+                                    ? Text(
+                                  '$_selectedCity',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 20.0,
+                                    fontWeight: FontWeight.bold,
+                                    fontFamily: 'Poppins',
+                                  ),
+                                )
+                                    : Container(),
+                                SizedBox(height: 40.0),
+                                _selectedCity.isNotEmpty
+                                    ? Image.asset(
+                                  _getImagePath(weather.condition),
+                                  width: 150.0,
+                                  height: 150.0,
+                                )
+                                    : Container(),
+                                SizedBox(height: 20.0),
+                                _selectedCity.isNotEmpty
+                                    ? Text(
+                                  weather.condition,
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 30.0,
+                                    fontWeight: FontWeight.bold,
+                                    fontFamily: 'Poppins',
+                                  ),
+                                )
+                                    : Container(),
+                                Text(
+                                  '${weather.temperatureC.toStringAsFixed(0)}°C',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 130.0,
+                                    fontWeight: FontWeight.w300,
+                                    fontFamily: 'PoppinsT',
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        _buildSuggestedCities(),
+                      ],
                     ),
-                  )
-                      : Container(),
-                      SizedBox(height: 40.0),
-
-                      _selectedCity.isNotEmpty
-                          ? Image.asset(
-                        _getImagePath(weather.condition),
-                        width: 150.0, // Set the width of the image
-                        height: 150.0, // Set the height of the image
-                      )
-                          : Container(),
-
-                  SizedBox(height: 20.0),
-
-                  _selectedCity.isNotEmpty
-                      ? Text(
-                    weather.condition,
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 20.0,
-                      fontWeight: FontWeight.bold,
-                      fontFamily: 'Poppins',
-                    ),
-                  )
-                      : Container(),
-                       ],
-                    ),
-                  ),
-                ),
-
-
-
-                    _buildSuggestedCities(),
-
                   ],
                 ),
-                ],
-                ),
+              ),
+            ],
           ),
-
-        ],
+        ),
       ),
     );
   }
+
 
   String _getImagePath(String condition) {
     switch (condition.toLowerCase()) {
