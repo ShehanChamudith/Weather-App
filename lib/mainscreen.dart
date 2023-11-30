@@ -3,6 +3,7 @@ import 'package:mad_weather_app/services/weather_service.dart';
 import 'dart:async';
 import 'dart:convert';
 import 'package:mad_weather_app/services/weather_service.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'model/weather.dart';
 
@@ -29,6 +30,26 @@ class _MainScreenState extends State<MainScreen> {
   void initState() {
     super.initState();
     getWeather("Colombo");
+    _loadLastSearchedCity();
+  }
+
+  void _loadLastSearchedCity() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? lastSearchedCity = prefs.getString('lastSearchedCity');
+
+    if (lastSearchedCity != null && lastSearchedCity.isNotEmpty) {
+      setState(() {
+        _selectedCity = lastSearchedCity;
+      });
+
+      // Fetch weather data for the last searched city
+      getWeather(lastSearchedCity);
+    }
+  }
+
+  void _saveLastSearchedCity(String city) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString('lastSearchedCity', city);
   }
 
   void getWeather(String city) async {
@@ -92,6 +113,22 @@ class _MainScreenState extends State<MainScreen> {
                 ),
 
                 SizedBox(height: 20.0),
+
+                Center(
+                  child: _selectedCity.isNotEmpty
+                      ? Text(
+                    '$_selectedCity:',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 18.0,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'Poppins',
+                    ),
+                  )
+                      : Container(),
+                ),
+
+
                 _buildSuggestedCities(),
               ],
             ),
@@ -101,6 +138,16 @@ class _MainScreenState extends State<MainScreen> {
     );
   }
 
+  void _onCitySelected(String cityAndCountry) {
+    if (cityAndCountry.isNotEmpty) {
+      setState(() {
+        _selectedCity = cityAndCountry;
+        _suggestedCities.clear();
+        getWeather(_selectedCity);
+        _saveLastSearchedCity(_selectedCity); // Save the selected city
+      });
+    }
+  }
 
   void _onSearchTextChanged(String input) {
     if (input.length >= 1) {
@@ -158,15 +205,4 @@ class _MainScreenState extends State<MainScreen> {
       ),
     );
   }
-
-  void _onCitySelected(String cityAndCountry) {
-    if (cityAndCountry.isNotEmpty) {
-      setState(() {
-        _selectedCity = cityAndCountry;
-        _suggestedCities.clear();
-        getWeather(_selectedCity);
-      });
-    }
-  }
-
 }
