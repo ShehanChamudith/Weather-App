@@ -124,31 +124,39 @@ class _MainScreenState extends State<MainScreen> {
                     '$_selectedCity',
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: 18.0,
+                      fontSize: 20.0,
                       fontWeight: FontWeight.bold,
                       fontFamily: 'Poppins',
                     ),
                   )
                       : Container(),
+                      SizedBox(height: 40.0),
 
-                  SizedBox(height: 10.0),
+                      _selectedCity.isNotEmpty
+                          ? Image.asset(
+                        _getImagePath(weather.condition),
+                        width: 150.0, // Set the width of the image
+                        height: 150.0, // Set the height of the image
+                      )
+                          : Container(),
+
+                  SizedBox(height: 20.0),
 
                   _selectedCity.isNotEmpty
                       ? Text(
                     weather.condition,
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: 16.0,
-                      fontWeight: FontWeight.normal,
+                      fontSize: 20.0,
+                      fontWeight: FontWeight.bold,
                       fontFamily: 'Poppins',
                     ),
                   )
                       : Container(),
-    ],
-                ),
+                       ],
                     ),
-    ),
-                 // Add space between the two text widgets
+                  ),
+                ),
 
 
 
@@ -163,6 +171,18 @@ class _MainScreenState extends State<MainScreen> {
         ],
       ),
     );
+  }
+
+  String _getImagePath(String condition) {
+    switch (condition.toLowerCase()) {
+      case 'light rain shower':
+        return 'images/heavyrain.png';
+      case 'partly cloudy':
+        return 'images/sun.png';
+    // Add more cases as needed for other conditions
+      default:
+        return 'images/moderaterain.png';
+    }
   }
 
   void _onCitySelected(String cityAndCountry) {
@@ -196,7 +216,7 @@ class _MainScreenState extends State<MainScreen> {
     return Container(
       padding: EdgeInsets.symmetric(vertical: 2.0),
       decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.6), // White container with transparency
+        color: Colors.white.withOpacity(0.9), // White container with transparency
         borderRadius: BorderRadius.circular(10.0),
       ),
       child: Column(
