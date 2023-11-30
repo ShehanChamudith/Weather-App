@@ -60,9 +60,7 @@ class _MainScreenState extends State<MainScreen> {
       tempF = weather.temperatureF;
       tempC = weather.temperatureC;
     });
-    print(weather.temperatureC);
-    print(weather.temperatureF);
-    print(weather.condition);
+
   }
 
   @override
@@ -82,6 +80,7 @@ class _MainScreenState extends State<MainScreen> {
             padding: EdgeInsets.only(left: 40.0, top: 60.0, right: 40.0),
             child: Column(
               children: [
+
                 Container(
                   decoration: BoxDecoration(
                     color: Colors.white.withOpacity(0.2), // Set the opacity value (0.0 to 1.0)
@@ -113,11 +112,16 @@ class _MainScreenState extends State<MainScreen> {
                 ),
 
                 SizedBox(height: 20.0),
+                Stack(
+                  children: [
 
                 Center(
-                  child: _selectedCity.isNotEmpty
+                  child:Container(
+                    child: Column(
+                    children: [
+                      _selectedCity.isNotEmpty
                       ? Text(
-                    '$_selectedCity:',
+                    '$_selectedCity',
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 18.0,
@@ -126,13 +130,36 @@ class _MainScreenState extends State<MainScreen> {
                     ),
                   )
                       : Container(),
+
+                  SizedBox(height: 10.0),
+
+                  _selectedCity.isNotEmpty
+                      ? Text(
+                    weather.condition,
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 16.0,
+                      fontWeight: FontWeight.normal,
+                      fontFamily: 'Poppins',
+                    ),
+                  )
+                      : Container(),
+    ],
                 ),
+                    ),
+    ),
+                 // Add space between the two text widgets
 
 
-                _buildSuggestedCities(),
-              ],
-            ),
+
+                    _buildSuggestedCities(),
+
+                  ],
+                ),
+                ],
+                ),
           ),
+
         ],
       ),
     );
