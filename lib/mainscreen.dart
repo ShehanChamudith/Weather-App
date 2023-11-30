@@ -16,6 +16,10 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   WeatherService weatherService = WeatherService();
   Weather weather = Weather();
+  final TextEditingController _searchController = TextEditingController();
+  List<String> _suggestedCities = [];
+  String _selectedCity = '';
+
 
   String currentWeather = "";
   double tempC = 0;
@@ -24,11 +28,11 @@ class _MainScreenState extends State<MainScreen> {
   @override
   void initState() {
     super.initState();
-    getWeather();
+    getWeather("Colombo");
   }
 
-  void getWeather() async {
-    weather = await weatherService.getWeatherData("Neluwa");
+  void getWeather(String city) async {
+    weather = await weatherService.getWeatherData(city);
 
     setState(() {
       currentWeather = weather.condition;
@@ -42,76 +46,125 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
-
-    final currentWidth = MediaQuery.of(context).size.width;
-    final statusBarHeight = MediaQuery.of(context).padding.top;
-    final appBarHeight = 56.0;
-
     return Scaffold(
-
-
+      backgroundColor: Colors.transparent, // Set background color to transparent
+      // appBar: AppBar(
+      //   title: Text('Search for city', style: TextStyle(fontFamily: 'Ubuntu', fontSize: 18.0, fontWeight: FontWeight.w600)),
+      //   backgroundColor: Colors.transparent, // Set app bar background color to transparent
+      //   elevation: 0,
+      //   centerTitle: true,
+      // ),
       body: Stack(
         children: [
-
-          Container(
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage('images/bg.jpg'),
-                fit: BoxFit.cover,
-              ),
-            ),
+          // Background image
+          Image.asset(
+            'images/bg.jpg',  // Replace 'background.jpg' with the actual image asset path
+            fit: BoxFit.cover,
+            width: double.infinity,
+            height: double.infinity,
           ),
-
-          Column(
-            children: [
-              SizedBox(height: 50.0), // Add some vertical space
-              Container(
-                margin: EdgeInsets.symmetric(horizontal: 20.0), // Add margin from right and left
-                decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.1), // Set background color and decrease opacity
-                  borderRadius: BorderRadius.circular(30.0),
-                ),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: TextField(
-                        decoration: InputDecoration(
-                          hintText: 'Search for City',
-                          border: InputBorder.none, // Remove border
-                          contentPadding: EdgeInsets.symmetric(vertical: 15, horizontal: 16),
-                        ),
-                        style: TextStyle(
-                          fontFamily: 'Poppins',
-                        ),
+          Padding(
+            padding: EdgeInsets.only(left: 40.0, top: 60.0, right: 40.0),
+            child: Column(
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(25.0),
+                  ),
+                  child: TextField(
+                    controller: _searchController,
+                    onChanged: _onSearchTextChanged,
+                    style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.normal),
+                    decoration: InputDecoration(
+                      hintText: 'Search for City',
+                      border: InputBorder.none,
+                      contentPadding: EdgeInsets.all(15.0),
+                      prefixIcon: Image.asset(
+                        'images/search.png',
+                        width: 30.0,
+                        height: 30.0,
+                        color: Colors.grey,
                       ),
                     ),
-                    IconButton(
-                      icon: Icon(Icons.search),
-                      onPressed: () {
-                        // Handle search button press
-                      },
-                    ),
-                  ],
+                  ),
                 ),
-              ),
-            ],
-          ),
-
-
-
-          Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(currentWeather),
-                Text(tempC.toString()),
-                Text(tempF.toString()),
+                SizedBox(height: 20.0),
+                _buildSuggestedCities(),
               ],
             ),
           ),
         ],
       ),
     );
+  }
+
+
+  void _onSearchTextChanged(String input) {
+    if (input.length >= 1) {
+      weatherService.getSuggestedCities(input).then((suggestions) {
+        suggestions.sort();
+
+        setState(() {
+          _suggestedCities = suggestions.take(5).toList();
+        });
+      });
+    } else {
+      setState(() {
+        _suggestedCities.clear();
+      });
+    }
+  }
+
+  Widget _buildSuggestedCities() {
+    return Container(
+      padding: EdgeInsets.symmetric(vertical: 2.0),
+      decoration: BoxDecoration(
+        color: Colors.white.withOpacity(0.6), // White container with transparency
+        borderRadius: BorderRadius.circular(10.0),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: _suggestedCities.map((cityAndCountry) {
+          // Split the city and country using a comma as a separator
+          List<String> parts = cityAndCountry.split(', ');
+
+          return Column(
+            children: [
+              ListTile(
+                title: Text(
+                  parts[0], // Display the city
+                  style: TextStyle(fontWeight: FontWeight.w400),
+                ),
+                subtitle: Text(
+                  parts.length > 1 ? parts[1] : '', // Display the country if available
+                  style: TextStyle(color: Color(0xFF878787)),
+                ),
+                onTap: () {
+                  _onCitySelected(cityAndCountry);
+                },
+              ),
+              Divider(
+                color: Color(0xFFe0e0eb),
+                height: 1, // Adjust the height of the divider
+                indent: 10,
+                endIndent: 10,
+              ),
+            ],
+          );
+        }).toList(),
+      ),
+    );
+  }
+
+  void _onCitySelected(String cityAndCountry) {
+    if (cityAndCountry.isNotEmpty) {
+      setState(() {
+        _selectedCity = cityAndCountry;
+        _suggestedCities.clear();
+        getWeather(_selectedCity);
+      });
+    }
   }
 
 }
