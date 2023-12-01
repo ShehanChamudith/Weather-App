@@ -339,8 +339,8 @@ class _MainScreenState extends State<MainScreen> {
       return 'images/cloudy.png';
     } else if (lowercaseCondition.contains('thunder') || lowercaseCondition.contains('thundering')) {
       return 'images/thunder.png';
-    // } else if (lowercaseCondition.contains('sun') || lowercaseCondition.contains('sunny')) {
-    //   return 'images/thunder.png';
+    } else if (lowercaseCondition.contains('sun') || lowercaseCondition.contains('sunny')) {
+      return 'images/sun.png';
     } else {
       return 'images/defcloudy.png';
     }
