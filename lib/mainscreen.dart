@@ -33,6 +33,7 @@ class _MainScreenState extends State<MainScreen> {
   @override
   void initState() {
     super.initState();
+    // getWeather("Colombo");
     _loadLastSearchedCity();
   }
 
@@ -47,8 +48,17 @@ class _MainScreenState extends State<MainScreen> {
 
       // Fetch weather data for the last searched city
       getWeather(lastSearchedCity);
+    } else {
+      // Load Colombo as the default city
+      setState(() {
+        _selectedCity = 'Colombo';
+      });
+
+      // Fetch weather data for Colombo
+      getWeather('Colombo');
     }
   }
+
 
   void _saveLastSearchedCity(String city) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();

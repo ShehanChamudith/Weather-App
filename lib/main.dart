@@ -34,7 +34,7 @@ class _AppWrapperState extends State<AppWrapper> {
   }
 
   void _loadSplashScreen() async {
-    await Future.delayed(const Duration(seconds: 2)); // Adjust the duration as needed
+    await Future.delayed(const Duration(seconds: 3)); // Adjust the duration as needed
     Navigator.of(context).pushReplacement(
       MaterialPageRoute(builder: (context) => MainScreen()), // Replace with your main screen widget
     );
