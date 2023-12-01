@@ -26,7 +26,7 @@ class SplashScreen extends StatelessWidget {
               SizedBox(height: 16.0),
               Text(
                 'Weather Buddy',
-                style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold,fontFamily: 'Poppins'),
+                style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold,fontFamily: 'Poppins',color: Colors.white),
               ),
             ],
           ),

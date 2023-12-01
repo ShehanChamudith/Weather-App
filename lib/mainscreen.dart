@@ -120,7 +120,7 @@ class _MainScreenState extends State<MainScreen> {
                         ),
                       ),
                     ),
-                    SizedBox(height: 25.0),
+                    SizedBox(height: 20.0),
                     Stack(
                       children: [
                         Center(
@@ -158,6 +158,7 @@ class _MainScreenState extends State<MainScreen> {
                                   _selectedCity.isNotEmpty
                                       ? Text(
                                     weather.condition,
+                                    textAlign: TextAlign.center,
                                     style: TextStyle(
                                       color: Colors.white,
                                       fontSize: 30.0,
@@ -165,6 +166,7 @@ class _MainScreenState extends State<MainScreen> {
                                       fontFamily: 'Poppins',
                                     ),
                                   )
+
                                       : Container(),
                                   Padding(
                                     padding: const EdgeInsets.all(10.0),
