@@ -33,7 +33,6 @@ class _MainScreenState extends State<MainScreen> {
   @override
   void initState() {
     super.initState();
-    getWeather("Colombo");
     _loadLastSearchedCity();
   }
 
@@ -57,6 +56,7 @@ class _MainScreenState extends State<MainScreen> {
   }
 
   void getWeather(String city) async {
+
     weather = await weatherService.getWeatherData(city);
 
     setState(() {
@@ -182,7 +182,7 @@ class _MainScreenState extends State<MainScreen> {
                                     '${weather.temperatureC.toStringAsFixed(0)}°C',
                                     style: TextStyle(
                                       color: Colors.white,
-                                      fontSize: 130.0,
+                                      fontSize: 100.0,
                                       fontWeight: FontWeight.w300,
                                       fontFamily: 'PoppinsT',
                                     ),
@@ -306,7 +306,7 @@ class _MainScreenState extends State<MainScreen> {
                                   style: TextStyle(color: Colors.white, fontFamily: 'Poppins'),
                                 ),
                                 Text(
-                                  '${weather.uv.toStringAsFixed(0)} kmH',
+                                  '${weather.uv.toStringAsFixed(0)}',
                                   style: TextStyle(color: Colors.white, fontFamily: 'Poppins'),
                                 ),
                               ],
@@ -329,16 +329,21 @@ class _MainScreenState extends State<MainScreen> {
 
 
   String _getImagePath(String condition) {
-    switch (condition.toLowerCase()) {
-      case 'light rain shower':
-        return 'images/heavyrain.png';
-      case 'partly cloudy':
-        return 'images/sun.png';
-    // Add more cases as needed for other conditions
-      default:
-        return 'images/moderaterain.png';
+    String lowercaseCondition = condition.toLowerCase();
+
+    if (lowercaseCondition.contains('rain') || lowercaseCondition.contains('rainy')) {
+      return 'images/rainy.png';
+    } else if (lowercaseCondition.contains('cloud') || lowercaseCondition.contains('cloudy')) {
+      return 'images/cloudy.png';
+    } else if (lowercaseCondition.contains('thunder') || lowercaseCondition.contains('thundering')) {
+      return 'images/thunder.png';
+    // } else if (lowercaseCondition.contains('sun') || lowercaseCondition.contains('sunny')) {
+    //   return 'images/thunder.png';
+    } else {
+      return 'images/defcloudy.png';
     }
   }
+
 
   void _onCitySelected(String cityAndCountry) {
     if (cityAndCountry.isNotEmpty) {
