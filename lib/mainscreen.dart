@@ -149,6 +149,7 @@ class _MainScreenState extends State<MainScreen> {
                                   _selectedCity.isNotEmpty
                                       ? Text(
                                     '$_selectedCity',
+                                    textAlign: TextAlign.center,
                                     style: TextStyle(
                                       color: Colors.white,
                                       fontSize: 20.0,
