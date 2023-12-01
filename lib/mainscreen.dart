@@ -25,6 +25,10 @@ class _MainScreenState extends State<MainScreen> {
   String currentWeather = "";
   double tempC = 0;
   double tempF = 0;
+  double windd = 0;
+  double uvv = 0;
+  double press = 0;
+  int hum=0;
 
   @override
   void initState() {
@@ -59,6 +63,10 @@ class _MainScreenState extends State<MainScreen> {
       currentWeather = weather.condition;
       tempF = weather.temperatureF;
       tempC = weather.temperatureC;
+      windd = weather.wind;
+      uvv = weather.uv;
+      press = weather.pressure;
+      hum=weather.humidity;
     });
 
   }
@@ -189,8 +197,9 @@ class _MainScreenState extends State<MainScreen> {
                       ],
                     ),
                     Container(
+                      padding: EdgeInsets.only(left: 45.0),
                       width: double.infinity,
-                      height: 180,
+                      height: 210,
                       decoration: ShapeDecoration(
                         color: Color(0x892F8BA8),
                         shape: RoundedRectangleBorder(
@@ -208,45 +217,45 @@ class _MainScreenState extends State<MainScreen> {
                                   width: 33,
                                   height: 33,
                                   decoration: ShapeDecoration(
-                                    color: Color(0xFF2F8BA8),
+                                    color: Colors.transparent,
                                     shape: CircleBorder(),
                                   ),
-                                  child: Image.asset('images/sun.png'), // Add your image path
+                                  child: Image.asset('images/wind.png'), // Add your image path
                                 ),
                                 SizedBox(height: 5),
                                 Text(
-                                  'Sun', // Your title
-                                  style: TextStyle(color: Colors.white),
+                                  'Wind',
+                                  style: TextStyle(color: Colors.white, fontFamily: 'Poppins'),
                                 ),
                                 Text(
-                                  'Description for Sun', // Your text below title
-                                  style: TextStyle(color: Colors.white),
+                                  '${weather.wind.toStringAsFixed(0)} kmH',
+                                  style: TextStyle(color: Colors.white, fontFamily: 'Poppins'),
                                 ),
                               ],
                             ),
                           ),
                           Positioned(
                             left: 16,
-                            top: 90,
+                            top: 110,
                             child: Column(
                               children: [
                                 Container(
                                   width: 33,
                                   height: 33,
                                   decoration: ShapeDecoration(
-                                    color: Color(0xFF2F8BA8),
+                                    color: Colors.transparent,
                                     shape: CircleBorder(),
                                   ),
-                                  child: Image.asset('images/sun.png'), // Add your image path
+                                  child: Image.asset('images/pressure.png'), // Add your image path
                                 ),
                                 SizedBox(height: 5),
                                 Text(
-                                  'Sun', // Your title
-                                  style: TextStyle(color: Colors.white),
+                                  'Preasure', // Your title
+                                  style: TextStyle(color: Colors.white, fontFamily: 'Poppins'),
                                 ),
                                 Text(
-                                  'Description for Sun', // Your text below title
-                                  style: TextStyle(color: Colors.white),
+                                  '${weather.pressure.toStringAsFixed(0)} IN',
+                                  style: TextStyle(color: Colors.white, fontFamily: 'Poppins'),
                                 ),
                               ],
                             ),
@@ -260,45 +269,45 @@ class _MainScreenState extends State<MainScreen> {
                                   width: 33,
                                   height: 33,
                                   decoration: ShapeDecoration(
-                                    color: Color(0xFF2F8BA8),
+                                    color: Colors.transparent,
                                     shape: CircleBorder(),
                                   ),
-                                  child: Image.asset('images/sun.png'), // Add your image path
+                                  child: Image.asset('images/humidity.png'), // Add your image path
                                 ),
                                 SizedBox(height: 5),
                                 Text(
-                                  'Sun', // Your title
-                                  style: TextStyle(color: Colors.white),
+                                  'Humidity', // Your title
+                                  style: TextStyle(color: Colors.white, fontFamily: 'Poppins'),
                                 ),
                                 Text(
-                                  'Description for Sun', // Your text below title
-                                  style: TextStyle(color: Colors.white),
+                                  '${weather.humidity.toStringAsFixed(0)} %',
+                                  style: TextStyle(color: Colors.white, fontFamily: 'Poppins'),
                                 ),
                               ],
                             ),
                           ),
                           Positioned(
                             left: 167,
-                            top: 90,
+                            top: 110,
                             child: Column(
                               children: [
                                 Container(
                                   width: 33,
                                   height: 33,
                                   decoration: ShapeDecoration(
-                                    color: Color(0xFF2F8BA8),
+                                    color: Colors.transparent,
                                     shape: CircleBorder(),
                                   ),
-                                  child: Image.asset('images/sun.png'), // Add your image path
+                                  child: Image.asset('images/uv-index.png'), // Add your image path
                                 ),
                                 SizedBox(height: 5),
                                 Text(
-                                  'Sun', // Your title
-                                  style: TextStyle(color: Colors.white),
+                                  'UV-Index', // Your title
+                                  style: TextStyle(color: Colors.white, fontFamily: 'Poppins'),
                                 ),
                                 Text(
-                                  'Description for Sun', // Your text below title
-                                  style: TextStyle(color: Colors.white),
+                                  '${weather.uv.toStringAsFixed(0)} kmH',
+                                  style: TextStyle(color: Colors.white, fontFamily: 'Poppins'),
                                 ),
                               ],
                             ),
