@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:mad_weather_app/services/weather_service.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import 'model/weather.dart';
 
 class MainScreen extends StatefulWidget {
@@ -344,11 +343,13 @@ class _MainScreenState extends State<MainScreen> {
   String _getImagePath(String condition) {
     String lowercaseCondition = condition.toLowerCase();
 
-    if (lowercaseCondition.contains('rain') || lowercaseCondition.contains('rainy')) {
+    if (lowercaseCondition.contains('rain') && lowercaseCondition.contains('thunder')) {
+      return 'images/thunder.png';
+    } else if (lowercaseCondition.contains('rain') || lowercaseCondition.contains('rainy')) {
       return 'images/rainy.png';
     } else if (lowercaseCondition.contains('cloud') || lowercaseCondition.contains('cloudy')) {
       return 'images/cloudy.png';
-    } else if (lowercaseCondition.contains('thunder') || lowercaseCondition.contains('thundering')) {
+    }else if (lowercaseCondition.contains('thunder') || lowercaseCondition.contains('thundering')) {
       return 'images/thunder.png';
     } else if (lowercaseCondition.contains('sun') || lowercaseCondition.contains('sunny')) {
       return 'images/sun.png';
