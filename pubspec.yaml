@@ -67,6 +67,7 @@ flutter:
      - images/bg.jpg
      - images/search.png
      - images/sun.png
+     - images/sun.gif
      - images/heavyrain.png
      - images/moderaterain.png
      - images/humidity.png
@@ -74,9 +75,13 @@ flutter:
      - images/wind.png
      - images/uv-index.png
      - images/cloudy.png
+     - images/cloudy.gif
      - images/rainy.png
+     - images/rainy.gif
      - images/thunder.png
+     - images/thunder.gif
      - images/defcloudy.png
+     - images/defcloudy.gif
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

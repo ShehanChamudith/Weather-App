@@ -135,7 +135,7 @@ class _MainScreenState extends State<MainScreen> {
                         Center(
                           child: Container(
                             width: double.infinity,
-                            decoration: BoxDecoration(
+                            decoration: BoxDecoration(                          //search box
                               color: Colors.white.withOpacity(0),
                               borderRadius: BorderRadius.circular(20.0), // Adjust the border radius as needed
                             ),
@@ -146,7 +146,7 @@ class _MainScreenState extends State<MainScreen> {
 
                                   SizedBox(height: 20.0),
                                   _selectedCity.isNotEmpty
-                                      ? Text(
+                                      ? Text(                                   //city
                                     '$_selectedCity',
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
@@ -159,14 +159,14 @@ class _MainScreenState extends State<MainScreen> {
                                       : Container(),
                                   SizedBox(height: 20.0),
                                   _selectedCity.isNotEmpty
-                                      ? Image.asset(
+                                      ? Image.asset(                            //load image
                                     _getImagePath(weather.condition),
-                                    width: 150.0,
-                                    height: 150.0,
+                                    width: 180.0,
+                                    height: 180.0,
                                   )
                                       : Container(),
                                   _selectedCity.isNotEmpty
-                                      ? Text(
+                                      ? Text(                                   //weather text
                                     weather.condition,
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
@@ -180,7 +180,7 @@ class _MainScreenState extends State<MainScreen> {
                                       : Container(),
                                   Padding(
                                     padding: const EdgeInsets.all(10.0),
-                                    child: Text(
+                                    child: Text(                                //date
                                       '$formattedDate',
                                       style: TextStyle(
                                         color: Colors.white, // Choose a color that suits your design
@@ -190,7 +190,7 @@ class _MainScreenState extends State<MainScreen> {
                                       ),
                                     ),
                                   ),
-                                  Text(
+                                  Text(                                         // temp
                                     '${weather.temperatureC.toStringAsFixed(0)}°C',
                                     style: TextStyle(
                                       color: Colors.white,
@@ -239,7 +239,7 @@ class _MainScreenState extends State<MainScreen> {
                                   'Wind',
                                   style: TextStyle(color: Colors.white, fontFamily: 'Poppins'),
                                 ),
-                                Text(
+                                Text(                                           //wind
                                   '${weather.wind.toStringAsFixed(0)} kmH',
                                   style: TextStyle(color: Colors.white, fontFamily: 'Poppins'),
                                 ),
@@ -265,7 +265,7 @@ class _MainScreenState extends State<MainScreen> {
                                   'Preasure', // Your title
                                   style: TextStyle(color: Colors.white, fontFamily: 'Poppins'),
                                 ),
-                                Text(
+                                Text(                                           //preasure
                                   '${weather.pressure.toStringAsFixed(0)} IN',
                                   style: TextStyle(color: Colors.white, fontFamily: 'Poppins'),
                                 ),
@@ -291,7 +291,7 @@ class _MainScreenState extends State<MainScreen> {
                                   'Humidity', // Your title
                                   style: TextStyle(color: Colors.white, fontFamily: 'Poppins'),
                                 ),
-                                Text(
+                                Text(                                           //humidity
                                   '${weather.humidity.toStringAsFixed(0)} %',
                                   style: TextStyle(color: Colors.white, fontFamily: 'Poppins'),
                                 ),
@@ -317,7 +317,7 @@ class _MainScreenState extends State<MainScreen> {
                                   'UV-Index', // Your title
                                   style: TextStyle(color: Colors.white, fontFamily: 'Poppins'),
                                 ),
-                                Text(
+                                Text(                                           //UV
                                   '${weather.uv.toStringAsFixed(0)}',
                                   style: TextStyle(color: Colors.white, fontFamily: 'Poppins'),
                                 ),
@@ -344,17 +344,17 @@ class _MainScreenState extends State<MainScreen> {
     String lowercaseCondition = condition.toLowerCase();
 
     if (lowercaseCondition.contains('rain') && lowercaseCondition.contains('thunder')) {
-      return 'images/thunder.png';
+      return 'images/thunder.gif';
     } else if (lowercaseCondition.contains('rain') || lowercaseCondition.contains('rainy')) {
-      return 'images/rainy.png';
+      return 'images/rainy.gif';
     } else if (lowercaseCondition.contains('cloud') || lowercaseCondition.contains('cloudy')) {
-      return 'images/cloudy.png';
+      return 'images/cloudy.gif';
     }else if (lowercaseCondition.contains('thunder') || lowercaseCondition.contains('thundering')) {
-      return 'images/thunder.png';
+      return 'images/thunder.gif';
     } else if (lowercaseCondition.contains('sun') || lowercaseCondition.contains('sunny')) {
-      return 'images/sun.png';
+      return 'images/sun.gif';
     } else {
-      return 'images/defcloudy.png';
+      return 'images/defcloudy.gif';
     }
   }
 
@@ -365,7 +365,7 @@ class _MainScreenState extends State<MainScreen> {
         _selectedCity = cityAndCountry;
         _suggestedCities.clear();
         getWeather(_selectedCity);
-        _saveLastSearchedCity(_selectedCity); // Save the selected city
+        _saveLastSearchedCity(_selectedCity);                                   // Save the selected city
       });
     }
   }
